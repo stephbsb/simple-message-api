@@ -1,0 +1,44 @@
+version: '3.4'
+services:
+  db:
+    image: stephany/simple-message-api-spring-mysql
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: docker
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: phisiocare
+    ports:
+      - "3308:3306"
+    networks:
+      - udemy-network
+  phisiocare-backend:
+    image: stephany/simple-message-api-spring-backend
+    restart: always
+    build:
+        context: ./SimpleMessageApiBackend
+        dockerfile: Dockerfile
+    working_dir: /SimpleMessageApiBackend
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_BOOT_ENVIRONMENT: Production
+    volumes:
+      - ./SimpleMessageApiBackend:/SimpleMessageApiBackend
+      - ~/.m2:/root/.m2
+    ports:
+      - "8080:8080"
+    command: mvn clean spring-boot:run
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - udemy-network
+networks:
+    udemy-network:
+        driver: bridge
