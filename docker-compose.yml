@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   db:
-    image: stephany/simple-message-api-spring-mysql
+    image: stephanybr/simple-message-api-spring-mysql
     command: mysqld --default-authentication-plugin=mysql_native_password
     restart: always
     build:
@@ -18,7 +18,7 @@ services:
     networks:
       - udemy-network
   phisiocare-backend:
-    image: stephany/simple-message-api-spring-backend
+    image: stephanybr/simple-message-api-spring-backend
     restart: always
     build:
         context: ./SimpleMessageApiBackend
