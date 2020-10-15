@@ -7,8 +7,8 @@ before_deploy:
 deploy:
   provider: script
   script:
-      docker push stephany/simple-message-api-spring-backend;
-      docker push stephany/simple-message-api-spring-mysql;
+      docker push stephanybr/simple-message-api-spring-backend;
+      docker push stephanybr/simple-message-api-spring-mysql;
   on:
     branch: master
 notifications:
